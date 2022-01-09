@@ -1,12 +1,12 @@
-#Simple Text Editor
-####Overview
+# Simple Text Editor
+#### Overview
 
 - This is a Simple Text Editor project that was created to enhance the developing skills along with version control.
 
-####Features
+#### Features
 - This allows the user to manipulate text including cut, copy, paste, find and replace texts.
 
-####Tech Used / Dependencies
+#### Tech Used / Dependencies
 
 - This is a Java based application.
 
