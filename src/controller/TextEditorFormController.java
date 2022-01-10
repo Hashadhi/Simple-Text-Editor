@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.BorderPane;
@@ -32,6 +29,32 @@ public class TextEditorFormController {
     public TextArea txtAreaEditor;
     public TextField txtSource;
     public Clipboard clipboard;
+    public Button btnNew;
+    public Button btnOpen;
+    public Button btnSave;
+    public Button btnCut;
+    public Button btnCopy;
+    public Button btnPaste;
+    public Button btnFind;
+    public Button btnReplace;
+    public Button btnDown;
+    public Button btnUp;
+    public TextField txtSearch;
+    public Button btnRegExp;
+    public Button btnCaseSensitive;
+
+
+    public void initialize(){
+        btnNew.setTooltip(new Tooltip("New file"));
+        btnOpen.setTooltip(new Tooltip("Open file"));
+        btnSave.setTooltip(new Tooltip("Save file"));
+        btnCut.setTooltip(new Tooltip("Cut"));
+        btnCopy.setTooltip(new Tooltip("Copy"));
+        btnPaste.setTooltip(new Tooltip("Paste"));
+        btnFind.setTooltip(new Tooltip("Find text"));
+        btnUp.setTooltip(new Tooltip("Move up"));
+        btnDown.setTooltip(new Tooltip("Move down"));
+    }
 
     public void newDocOnAction(ActionEvent actionEvent) throws IOException {
         Stage stage = (Stage) brdrpnArea.getScene().getWindow();
