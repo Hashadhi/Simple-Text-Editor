@@ -113,7 +113,6 @@
                         </ImageView>
                      </graphic></Button>
                   <TextField fx:id="txtSearch" layoutX="493.0" layoutY="1.0" prefHeight="33.0" prefWidth="236.0" promptText="Search text" />
-                  <Button fx:id="btnReplace" accessibleRole="IMAGE_VIEW" accessibleText="New File" layoutX="807.0" layoutY="-2.0" mnemonicParsing="false" onAction="#replaceOnAction" prefHeight="35.0" prefWidth="88.0" text="Replace" />
                   <Button fx:id="btnUp" accessibleRole="IMAGE_VIEW" accessibleText="New File" layoutX="729.0" layoutY="-2.0" mnemonicParsing="false" onAction="#upOnAction" prefHeight="36.0" prefWidth="39.0">
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="21.0">
@@ -132,18 +131,27 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <ToggleButton fx:id="btnRegExp" layoutX="895.0" layoutY="-2.0" mnemonicParsing="false" onAction="#regExpOnAction" prefHeight="35.0" prefWidth="89.0" text="RegExp" />
-                  <ToggleButton fx:id="btnCaseSens" layoutX="984.0" layoutY="-2.0" mnemonicParsing="false" onAction="#caseSensitiveOnAction" prefHeight="35.0" prefWidth="129.0" text="Case Sensitive" />
+                  <TextField fx:id="txtReplaceWith" layoutX="829.0" layoutY="1.0" prefHeight="33.0" prefWidth="236.0" promptText="Search text" />
                </children>
             </AnchorPane>
          </left>
+         <bottom>
+            <AnchorPane prefHeight="41.0" prefWidth="1114.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ToggleButton fx:id="btnRegExp" layoutX="495.0" layoutY="3.0" mnemonicParsing="false" onAction="#regExpOnAction" prefHeight="35.0" prefWidth="89.0" text="RegExp" />
+                  <ToggleButton fx:id="btnCaseSens" layoutX="594.0" layoutY="3.0" mnemonicParsing="false" onAction="#caseSensitiveOnAction" prefHeight="35.0" prefWidth="129.0" text="Case Sensitive" />
+                  <Button fx:id="btnReplace" accessibleRole="IMAGE_VIEW" accessibleText="New File" layoutX="856.0" layoutY="3.0" mnemonicParsing="false" onAction="#replaceOnAction" prefHeight="35.0" prefWidth="88.0" text="Replace" />
+                  <Button fx:id="btnReplaceWith" accessibleRole="IMAGE_VIEW" accessibleText="New File" layoutX="944.0" layoutY="3.0" mnemonicParsing="false" onAction="#replaceAllOnAction" prefHeight="35.0" prefWidth="131.0" text="Replace All" />
+               </children>
+            </AnchorPane>
+         </bottom>
       </BorderPane>
    </top>
    <bottom>
       <AnchorPane prefHeight="48.0" prefWidth="1114.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="38.0" layoutY="16.0" text="Total words : " />
-            <TextField fx:id="txtTotWords" layoutX="135.0" layoutY="11.0" />
+            <TextField fx:id="txtTotWords" layoutX="135.0" layoutY="11.0" text="0" />
             <Label layoutX="786.0" layoutY="16.0" text="Found words : " />
             <TextField layoutX="883.0" layoutY="11.0" />
          </children>

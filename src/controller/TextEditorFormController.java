@@ -54,7 +54,7 @@ public class TextEditorFormController {
     public Button btnReplaceWith;
 
 
-    public void initialize(){
+    public void initialize() {
         btnNew.setTooltip(new Tooltip("New file"));
         btnOpen.setTooltip(new Tooltip("Open file"));
         btnSave.setTooltip(new Tooltip("Save file"));
@@ -66,7 +66,8 @@ public class TextEditorFormController {
         btnDown.setTooltip(new Tooltip("Move down"));
 
         txtAreaEditor.textProperty().addListener((observable, oldValue, newValue) -> {
-            isEdited= true;
+            isEdited = true;
+            txtTotWords.setText(String.valueOf(txtAreaEditor.getText().split(" ").length));
         });
     }
 
@@ -74,8 +75,8 @@ public class TextEditorFormController {
         txtAreaEditor.deselect();
         if (isEdited) {
             int flags = 0;
-            if(!btnRegExp.isSelected()) flags =flags | Pattern.LITERAL;
-            if(!btnCaseSens.isSelected()) flags =flags | Pattern.CASE_INSENSITIVE;
+            if (!btnRegExp.isSelected()) flags = flags | Pattern.LITERAL;
+            if (!btnCaseSens.isSelected()) flags = flags | Pattern.CASE_INSENSITIVE;
 
             matcher = Pattern.compile(txtSearch.getText(), flags).matcher(txtAreaEditor.getText());
             isEdited = false;
@@ -85,23 +86,25 @@ public class TextEditorFormController {
             int start = matcher.start();
             int end = matcher.end();
             txtAreaEditor.selectRange(start, end);
-        }else{
+        } else {
             matcher.reset();
         }
     }
 
     public void replaceOnAction(ActionEvent actionEvent) {
-        while(){
-            if (matcher.find()) {
-                int start = matcher.start();
-                int end = matcher.end();
-                txtAreaEditor.selectRange(start, end);
-            }else{
-                matcher.reset();
-            }
+        btnFind.fire();
+        if (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            txtAreaEditor.replaceText(start, end, txtReplaceWith.getText());
+        } else {
+            matcher.reset();
         }
     }
+
     public void replaceAllOnAction(ActionEvent actionEvent) {
+        String replaceWith = txtReplaceWith.getText();
+        txtAreaEditor.setText(txtAreaEditor.getText().replace(txtSearch.getText(), replaceWith));
     }
 
     public void upOnAction(ActionEvent actionEvent) {
@@ -112,7 +115,7 @@ public class TextEditorFormController {
             int start = matcher.start();
             int end = matcher.end();
             txtAreaEditor.selectRange(start, end);
-        }else{
+        } else {
             matcher.reset();
         }
     }
@@ -123,7 +126,7 @@ public class TextEditorFormController {
     }
 
     public void caseSensitiveOnAction(ActionEvent actionEvent) {
-        isEdited=true;
+        isEdited = true;
         btnFind.fire();
     }
 
@@ -131,10 +134,10 @@ public class TextEditorFormController {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Want to save the file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
         Optional<ButtonType> choice = alert.showAndWait();
 
-        if(choice.get()==ButtonType.YES){
+        if (choice.get() == ButtonType.YES) {
             saveOnAction(actionEvent);
             txtAreaEditor.clear();
-        }else if(choice.get()==ButtonType.NO){
+        } else if (choice.get() == ButtonType.NO) {
             txtAreaEditor.clear();
         }
     }
@@ -162,7 +165,7 @@ public class TextEditorFormController {
 
         directoryChooser.setTitle("Open a directory");
         File file = directoryChooser.showDialog(null);
-        String destinationPath=file.getAbsolutePath();
+        String destinationPath = file.getAbsolutePath();
 
         String fileName = JOptionPane.showInputDialog("File name: ");
         Path path = Paths.get(destinationPath + "/" + fileName + ".txt");
@@ -184,8 +187,8 @@ public class TextEditorFormController {
         setSelectedText();
         String[] texts = txtAreaEditor.getText().split(txtAreaEditor.getSelectedText());
         txtAreaEditor.clear();
-        for (String text:texts) {
-            txtAreaEditor.setText(txtAreaEditor.getText()+text);
+        for (String text : texts) {
+            txtAreaEditor.setText(txtAreaEditor.getText() + text);
         }
     }
 
@@ -211,7 +214,7 @@ public class TextEditorFormController {
         stage.show();
     }
 
-    private void setSelectedText(){
+    private void setSelectedText() {
         clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
         content.putString(txtAreaEditor.getSelectedText());

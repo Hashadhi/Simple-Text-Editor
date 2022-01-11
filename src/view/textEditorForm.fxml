@@ -151,7 +151,7 @@
       <AnchorPane prefHeight="48.0" prefWidth="1114.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="38.0" layoutY="16.0" text="Total words : " />
-            <TextField fx:id="txtTotWords" layoutX="135.0" layoutY="11.0" />
+            <TextField fx:id="txtTotWords" layoutX="135.0" layoutY="11.0" text="0" />
             <Label layoutX="786.0" layoutY="16.0" text="Found words : " />
             <TextField layoutX="883.0" layoutY="11.0" />
          </children>
