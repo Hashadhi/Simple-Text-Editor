@@ -4,15 +4,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="362.0" prefWidth="749.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AboutUsFormController">
    <children>
-      <Label layoutX="245.0" layoutY="31.0" text="We are happy to help!">
+      <Label layoutX="205.0" layoutY="31.0" text="We are happy to help!">
          <font>
-            <Font name="System Bold" size="22.0" />
+            <Font name="System Bold" size="27.0" />
          </font>
       </Label>
-      <Label layoutX="51.0" layoutY="126.0" text="About Us..">
+      <Label layoutX="290.0" layoutY="110.0" prefHeight="31.0" prefWidth="158.0" text="About Us">
+         <font>
+            <Font name="System Bold" size="26.0" />
+         </font>
+      </Label>
+      <Label layoutX="161.0" layoutY="279.0" text="MIT LicenseCopyright © [2022] [H.G. Hashadhi Jayasinghe]">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="285.0" layoutY="198.0" text="Version 0.1.0">
          <font>
             <Font name="System Bold" size="21.0" />
          </font>
