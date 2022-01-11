@@ -23,6 +23,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TextEditorFormController {
     public BorderPane brdrpnArea;
@@ -40,8 +43,15 @@ public class TextEditorFormController {
     public Button btnDown;
     public Button btnUp;
     public TextField txtSearch;
-    public Button btnRegExp;
-    public Button btnCaseSensitive;
+    public boolean isEdited = false;
+    public TextField txtTotWords;
+    public TextField txtTotFoundWords;
+    public Stage stage;
+    public ToggleButton btnRegExp;
+    public ToggleButton btnCaseSens;
+    public Matcher matcher;
+    public TextField txtReplaceWith;
+    public Button btnReplaceWith;
 
 
     public void initialize(){
@@ -54,13 +64,79 @@ public class TextEditorFormController {
         btnFind.setTooltip(new Tooltip("Find text"));
         btnUp.setTooltip(new Tooltip("Move up"));
         btnDown.setTooltip(new Tooltip("Move down"));
+
+        txtAreaEditor.textProperty().addListener((observable, oldValue, newValue) -> {
+            isEdited= true;
+        });
+    }
+
+    public void searchOnAction(ActionEvent actionEvent) {
+        txtAreaEditor.deselect();
+        if (isEdited) {
+            int flags = 0;
+            if(!btnRegExp.isSelected()) flags =flags | Pattern.LITERAL;
+            if(!btnCaseSens.isSelected()) flags =flags | Pattern.CASE_INSENSITIVE;
+
+            matcher = Pattern.compile(txtSearch.getText(), flags).matcher(txtAreaEditor.getText());
+            isEdited = false;
+        }
+
+        if (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            txtAreaEditor.selectRange(start, end);
+        }else{
+            matcher.reset();
+        }
+    }
+
+    public void replaceOnAction(ActionEvent actionEvent) {
+        while(){
+            if (matcher.find()) {
+                int start = matcher.start();
+                int end = matcher.end();
+                txtAreaEditor.selectRange(start, end);
+            }else{
+                matcher.reset();
+            }
+        }
+    }
+    public void replaceAllOnAction(ActionEvent actionEvent) {
+    }
+
+    public void upOnAction(ActionEvent actionEvent) {
+    }
+
+    public void downOnAction(ActionEvent actionEvent) {
+        if (matcher.find()) {
+            int start = matcher.start();
+            int end = matcher.end();
+            txtAreaEditor.selectRange(start, end);
+        }else{
+            matcher.reset();
+        }
+    }
+
+    public void regExpOnAction(ActionEvent actionEvent) {
+        isEdited = true;
+        btnFind.fire();
+    }
+
+    public void caseSensitiveOnAction(ActionEvent actionEvent) {
+        isEdited=true;
+        btnFind.fire();
     }
 
     public void newDocOnAction(ActionEvent actionEvent) throws IOException {
-        Stage stage = (Stage) brdrpnArea.getScene().getWindow();
-        stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/textEditorForm.fxml"))));
-        stage.show();
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Want to save the file?", ButtonType.YES, ButtonType.NO, ButtonType.CANCEL);
+        Optional<ButtonType> choice = alert.showAndWait();
 
+        if(choice.get()==ButtonType.YES){
+            saveOnAction(actionEvent);
+            txtAreaEditor.clear();
+        }else if(choice.get()==ButtonType.NO){
+            txtAreaEditor.clear();
+        }
     }
 
     public void openOnAction(ActionEvent actionEvent) throws IOException {
@@ -108,8 +184,7 @@ public class TextEditorFormController {
         setSelectedText();
         String[] texts = txtAreaEditor.getText().split(txtAreaEditor.getSelectedText());
         txtAreaEditor.clear();
-        for (String text:texts
-        ) {
+        for (String text:texts) {
             txtAreaEditor.setText(txtAreaEditor.getText()+text);
         }
     }
@@ -135,10 +210,38 @@ public class TextEditorFormController {
         stage.setResizable(true);
         stage.show();
     }
+
     private void setSelectedText(){
         clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
         content.putString(txtAreaEditor.getSelectedText());
         clipboard.setContent(content);
     }
+
+    public void newFileOnAction(ActionEvent actionEvent) throws IOException {
+        newDocOnAction(actionEvent);
+    }
+
+    public void openFileOnAction(ActionEvent actionEvent) throws IOException {
+        openOnAction(actionEvent);
+    }
+
+    public void saveFileOnAction(ActionEvent actionEvent) throws IOException {
+        saveOnAction(actionEvent);
+    }
+
+    public void cutTextOnAction(ActionEvent actionEvent) {
+        cutOnAction(actionEvent);
+    }
+
+    public void copyTextOnAction(ActionEvent actionEvent) {
+        copyOnAction(actionEvent);
+
+    }
+
+    public void pasteFileOnAction(ActionEvent actionEvent) {
+        pasteOnAction(actionEvent);
+    }
+
 }
+
